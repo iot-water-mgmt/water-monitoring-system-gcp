@@ -1,0 +1,50 @@
+[
+  {
+    "name": "timestamp",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "The timestamp of the sensor"
+  },
+  {
+    "name": "deviceId",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Device ID of the sensor"
+  },
+  {
+    "name": "latitude",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Latitude of the sensor"
+  },
+  {
+    "name": "longitude",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Longitude of the sensor"
+  },
+  {
+    "name": "volume",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Volume of the water"
+  },
+  {
+    "name": "ph",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "pH value of the water"
+  },
+  {
+    "name": "tds",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "TDS Value of the water"
+  },
+  {
+    "name": "temperature",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "Temperature of the water"
+  }
+]

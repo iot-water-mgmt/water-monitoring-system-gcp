@@ -1,2 +1,49 @@
-# water-monitoring-system-gcp
-The scope of this project is to design, build and implement an end-to-end low-cost water monitoring system using cloud computing and IoT to capture data such as water level, quality parameters such as pH value, temperature, TDS, etc. and perform data analytics on the collected raw data using following Google cloud services: Cloud IoT Core for device connection and management, Cloud Pub/Sub for data ingestion, Cloud Functions for building backend service, Cloud Storage for storing the data, Cloud Dataflow for streaming and analytics, BigQuery for querying the data, Data Studio for visualizing the data, IoT Device Simulator for mimicking physical hardware sensors by sending data directly to the cloud at regular intervals.
+# IOT Water Management System
+
+## Introduction
+### The device simulators can be hosted in any virtual machine
+Following components are used
+* Docker
+* Docker Compose
+* Python IoT Client
+
+### The IoT Processing is managed in Google Cloud Platform
+Following components are used
+* IoT Core
+* Pub/Sub
+* Dataflow
+* BigQuery
+* Data Studio
+* Cloud Function
+* Cloud Firestore
+
+## Architecture
+![Architecture](./Architecture.png)
+
+## Pre-requisites
+
+### Create Service Account
+1. Create GCP Project
+2. Create the Service Account
+3. Assign the Editor role to the service account on the desired project
+4. Create and download the key of the service account and rename it as terraform-key.json
+
+### Create database in Firestore
+1. Go to Firestore
+2. Select Native Mode
+3. Select a Location (e.g. United States)
+4. Click on "Create Database"
+
+### Clone the Repository
+1. Clone the repository containing the code and the configuration files
+2. Switch to the terraform directory
+3. Copy the terrform.tfvars.example file to terraform.tfvars 
+4. Replace the value of the project variables with your own values
+
+### Create infrastructure using Terraform
+Execute the follwing commands using gcloud CLI or cloud shell.
+1. `export GOOGLE_CLOUD_KEYFILE_JSON=terraform-key.json`
+2. `terraform init`
+3. `terraform plan`
+4. `terraform apply`
+
