@@ -39,6 +39,7 @@ Following components are used
 2. Switch to the terraform directory
 3. Copy the terrform.tfvars.example file to terraform.tfvars 
 4. Replace the value of the project variables with your own values
+5. Upload and move the terraform-key.json to the terraform directory
 
 ### Create infrastructure using Terraform
 Execute the follwing commands using gcloud CLI or cloud shell.
