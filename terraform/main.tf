@@ -144,3 +144,11 @@ resource "null_resource" "register-devices" {
   }
   depends_on = [google_cloudiot_registry.registry, null_resource.generate-key]
 }
+
+resource "null_resource" "deregister-devices" {
+  provisioner "local-exec" {
+    when        = destroy
+    command     = "sh ../devices/deregister-device.sh ${var.project_id} ${var.region} ${google_cloudiot_registry.registry.name} ${var.num_of_devices}"
+    interpreter = ["/bin/bash", "-c"]
+  }
+}
