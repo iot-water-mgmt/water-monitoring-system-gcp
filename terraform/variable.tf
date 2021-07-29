@@ -17,8 +17,3 @@ variable "num_of_devices" {
   description = "The total number of devices to be registered with Cloud IOT registry."
   type        = string
 }
-
-variable "deletion_protection" {
-  description = "Delete protection of resource."
-  type        = bool
-}

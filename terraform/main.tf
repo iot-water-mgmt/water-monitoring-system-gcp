@@ -98,6 +98,7 @@ resource "google_bigquery_table" "device-data" {
   dataset_id = google_bigquery_dataset.dataset.dataset_id
   table_id   = "device_data"
   schema     = file("${path.module}/schema.json")
+  deletion_protection = false
 }
 
 resource "google_dataflow_job" "ps_to_bq_job" {

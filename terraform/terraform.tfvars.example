@@ -2,4 +2,3 @@ project_id = "iot-123456"
 region = "us-central1"
 zone = "us-central1-a"
 num_of_devices = 5
-deletion_protection=false
