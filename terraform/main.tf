@@ -146,9 +146,16 @@ resource "null_resource" "register-devices" {
 }
 
 resource "null_resource" "deregister-devices" {
+  triggers = {
+    project_id = var.project_id
+    region = var.region
+    iot_registry = google_cloudiot_registry.registry.name
+    num_of_devices = var.num_of_devices
+  }
   provisioner "local-exec" {
     when        = destroy
-    command     = "sh ../devices/deregister-device.sh ${var.project_id} ${var.region} ${google_cloudiot_registry.registry.name} ${var.num_of_devices}"
+    command     = "sh ../devices/deregister-device.sh ${self.triggers.project_id} ${self.triggers.region} ${self.triggers.iot_registry} ${self.triggers.num_of_devices}"
     interpreter = ["/bin/bash", "-c"]
   }
+  depends_on = [google_cloudiot_registry.registry]
 }
