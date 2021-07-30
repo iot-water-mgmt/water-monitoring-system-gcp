@@ -87,7 +87,7 @@ resource "google_bigquery_dataset" "dataset" {
   friendly_name = "iot"
   description   = "This is a IOT dataset"
 
-  default_table_expiration_ms = 3600000
+  # default_table_expiration_ms = 3600000
 
   labels = {
     env = "iot-demo"
