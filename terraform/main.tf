@@ -133,14 +133,14 @@ resource "google_cloudiot_registry" "registry" {
 
 resource "null_resource" "generate-key" {
   provisioner "local-exec" {
-    command     = "sh ../devices/generate-key.sh"
+    command     = "sh ../scripts/generate-key.sh"
     interpreter = ["/bin/bash", "-c"]
   }
 }
 
 resource "null_resource" "register-devices" {
   provisioner "local-exec" {
-    command     = "sh ../devices/register-device.sh ${var.project_id} ${var.region} ${google_cloudiot_registry.registry.name} ${var.num_of_devices}"
+    command     = "sh ../scripts/register-device.sh ${var.project_id} ${var.region} ${google_cloudiot_registry.registry.name} ${var.num_of_devices}"
     interpreter = ["/bin/bash", "-c"]
   }
   depends_on = [google_cloudiot_registry.registry, null_resource.generate-key]
@@ -155,7 +155,7 @@ resource "null_resource" "deregister-devices" {
   }
   provisioner "local-exec" {
     when        = destroy
-    command     = "sh ../devices/deregister-device.sh ${self.triggers.project_id} ${self.triggers.region} ${self.triggers.iot_registry} ${self.triggers.num_of_devices}"
+    command     = "sh ../scripts/deregister-device.sh ${self.triggers.project_id} ${self.triggers.region} ${self.triggers.iot_registry} ${self.triggers.num_of_devices}"
     interpreter = ["/bin/bash", "-c"]
   }
   depends_on = [google_cloudiot_registry.registry]
