@@ -1,15 +1,15 @@
 [
   {
-    "name": "timestamp",
-    "type": "STRING",
-    "mode": "NULLABLE",
-    "description": "The timestamp of the sensor"
-  },
-  {
     "name": "deviceId",
     "type": "STRING",
     "mode": "NULLABLE",
     "description": "Device ID of the sensor"
+  },
+  {
+    "name": "timestamp",
+    "type": "STRING",
+    "mode": "NULLABLE",
+    "description": "The timestamp of the sensor"
   },
   {
     "name": "latitude",

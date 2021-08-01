@@ -19,6 +19,7 @@ import time
 import json
 import jwt
 import paho.mqtt.client as mqtt
+from geopy.geocoders import Nominatim
 # [END iot_mqtt_includes]
 
 logging.getLogger('googleapiclient.discovery_cache').setLevel(logging.CRITICAL)
@@ -243,6 +244,10 @@ def parse_command_line_args():
         '--service_account_json',
         default=os.environ.get("GOOGLE_APPLICATION_CREDENTIALS"),
         help='Path to service account json file.')
+    parser.add_argument(
+        '--city',
+        required=True,
+        help='City name')
 
     # Command subparser
     command = parser.add_subparsers(dest='command')
@@ -252,6 +257,15 @@ def parse_command_line_args():
         help=mqtt_device_simulator.__doc__)
 
     return parser.parse_args()
+
+
+def get_geocode_from_city(city):
+    geolocator = Nominatim(user_agent="device-simulator")
+    country = "India"
+    geocode = geolocator.geocode(f'${city}, ${country}')
+    print("latitude is :-", geocode.latitude,
+          "\nlongtitude is:-", geocode.longitude)
+    return geocode
 
 
 def mqtt_device_simulator(args):
@@ -294,7 +308,13 @@ def mqtt_device_simulator(args):
         payload['deviceId'] = args.device_id
         payload['timestamp'] = datetime.datetime.strftime(
             datetime.datetime.utcnow(), '%Y-%m-%d %H:%M:%S')
-        payload['temperature'] = random.randint(-5, 20)
+        geocode = get_geocode_from_city(args.city)
+        payload['latitude'] = geocode.latitude
+        payload['longitude'] = geocode.longitude
+        payload['volume'] = random.randint(800, 2000)
+        payload['ph'] = random.randint(6, 8)
+        payload['tds'] = random.randint(100, 1000)
+        payload['temperature'] = random.randint(0, 50)
         payload = json.dumps(payload)
 
         print('Publishing message {}/{}: \'{}\''.format(
