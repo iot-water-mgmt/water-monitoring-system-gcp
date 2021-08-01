@@ -19,7 +19,7 @@ import time
 import json
 import jwt
 import paho.mqtt.client as mqtt
-from geopy.geocoders import Nominatim
+from faker import Faker
 # [END iot_mqtt_includes]
 
 logging.getLogger('googleapiclient.discovery_cache').setLevel(logging.CRITICAL)
@@ -244,10 +244,6 @@ def parse_command_line_args():
         '--service_account_json',
         default=os.environ.get("GOOGLE_APPLICATION_CREDENTIALS"),
         help='Path to service account json file.')
-    parser.add_argument(
-        '--city',
-        required=True,
-        help='City name')
 
     # Command subparser
     command = parser.add_subparsers(dest='command')
@@ -257,15 +253,6 @@ def parse_command_line_args():
         help=mqtt_device_simulator.__doc__)
 
     return parser.parse_args()
-
-
-def get_geocode_from_city(city):
-    geolocator = Nominatim(user_agent="device-simulator")
-    country = "India"
-    geocode = geolocator.geocode(f'${city}, ${country}')
-    print("latitude is :-", geocode.latitude,
-          "\nlongtitude is:-", geocode.longitude)
-    return geocode
 
 
 def mqtt_device_simulator(args):
@@ -285,6 +272,10 @@ def mqtt_device_simulator(args):
         args.project_id, args.cloud_region, args.registry_id,
         args.device_id, args.private_key_file, args.algorithm,
         args.ca_certs, args.mqtt_bridge_hostname, args.mqtt_bridge_port)
+    
+    fake = Faker()
+    geocode = fake.local_latlng(country_code='IN', coords_only=True)
+    print(f'Geocode: {geocode}')
 
     # Publish num_messages messages to the MQTT bridge once per second.
     for i in range(1, args.num_messages + 1):
@@ -308,9 +299,8 @@ def mqtt_device_simulator(args):
         payload['deviceId'] = args.device_id
         payload['timestamp'] = datetime.datetime.strftime(
             datetime.datetime.utcnow(), '%Y-%m-%d %H:%M:%S')
-        geocode = get_geocode_from_city(args.city)
-        payload['latitude'] = geocode.latitude
-        payload['longitude'] = geocode.longitude
+        payload['latitude'] = geocode[0]
+        payload['longitude'] = geocode[1]
         payload['volume'] = random.randint(800, 2000)
         payload['ph'] = random.randint(6, 8)
         payload['tds'] = random.randint(100, 1000)

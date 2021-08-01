@@ -19,4 +19,3 @@ CMD python sensor.py \
        --device_id=$device_id \
        --algorithm=RS256 \
        --private_key_file=$private_key_file \
-       --city="$city"

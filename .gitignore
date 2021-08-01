@@ -40,3 +40,4 @@ terraform-key.json
 venv/
 .idea
 .DS_Store
+*.pem
