@@ -16,7 +16,7 @@ while [ $counter -le $NUM_OF_DEVICES ]; do
         -e registry_id=$REGISTRY \
         -e cloud_region=$REGION \
         -e project_id=$PROJECT \
-        -e num_messages=$NUM_OF_MESSAGES
+        -e num_messages=$NUM_OF_MESSAGES \
         -e historical_data=$HISTORICAL_DATA
         python-iot-sensor
 
