@@ -312,9 +312,9 @@ def mqtt_device_simulator(args):
         payload['latitude'] = geocode[0]
         payload['longitude'] = geocode[1]
         payload['volume'] = random.randint(800, 2000)
-        payload['ph'] = random.randint(6, 8)
+        payload['ph'] = round(random.uniform(6, 8), 1)
         payload['tds'] = random.randint(100, 1000)
-        payload['temperature'] = random.randint(0, 50)
+        payload['temperature'] = round(random.uniform(0, 50), 1)
         payload = json.dumps(payload)
 
         print('Publishing message {}/{}: \'{}\''.format(
