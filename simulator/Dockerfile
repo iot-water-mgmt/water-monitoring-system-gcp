@@ -18,4 +18,6 @@ CMD python -u sensor.py \
        --project_id=$project_id \
        --device_id=$device_id \
        --algorithm=RS256 \
-       --private_key_file=$private_key_file
+       --private_key_file=$private_key_file \
+       --num_messages=$num_messages \
+       --historical_data=$historical_data
