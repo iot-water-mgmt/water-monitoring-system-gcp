@@ -1,10 +1,11 @@
 #!/bin/bash
 
 FILE=rsa_private.pem
-DIR=secrets
+DIR=$HOME/secrets
 
 mkdir -p $DIR
 cd $DIR
+ls -l
 
 if [ -f "$FILE" ]; then
     echo "$FILE already exists. Do nothing!!"

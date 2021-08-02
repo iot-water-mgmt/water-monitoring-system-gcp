@@ -4,7 +4,7 @@ PROJECT=$1
 REGION=$2
 REGISTRY=$3
 NUM_OF_DEVICES=$4
-DIR=secrets
+DIR=$HOME/secrets
 
 cd $DIR
 counter=1
