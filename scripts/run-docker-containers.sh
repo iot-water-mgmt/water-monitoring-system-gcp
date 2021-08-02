@@ -17,7 +17,7 @@ while [ $counter -le $NUM_OF_DEVICES ]; do
         -e cloud_region=$REGION \
         -e project_id=$PROJECT \
         -e num_messages=$NUM_OF_MESSAGES \
-        -e historical_data=$HISTORICAL_DATA
+        -e historical_data=$HISTORICAL_DATA \
         python-iot-sensor
 
     counter=$((counter + 1))
