@@ -4,6 +4,8 @@ PROJECT=$1
 REGION=$2
 REGISTRY=$3
 NUM_OF_DEVICES=$4
+NUM_OF_MESSAGES=$5
+HISTORICAL_DATA=$6
 
 counter=1
 while [ $counter -le $NUM_OF_DEVICES ]; do
@@ -14,6 +16,8 @@ while [ $counter -le $NUM_OF_DEVICES ]; do
         -e registry_id=$REGISTRY \
         -e cloud_region=$REGION \
         -e project_id=$PROJECT \
+        -e num_messages=$NUM_OF_MESSAGES
+        -e historical_data=$HISTORICAL_DATA
         python-iot-sensor
 
     counter=$((counter + 1))

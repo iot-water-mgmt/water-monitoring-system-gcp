@@ -20,6 +20,7 @@ import json
 import jwt
 import paho.mqtt.client as mqtt
 from faker import Faker
+from distutils.util import strtobool
 # [END iot_mqtt_includes]
 
 logging.getLogger('googleapiclient.discovery_cache').setLevel(logging.CRITICAL)
@@ -230,6 +231,10 @@ def parse_command_line_args():
         type=int,
         default=100,
         help='Number of messages to publish.')
+    parser.add_argument('--historical_data',
+                        type=lambda x: bool(strtobool(x)),
+                        default=False,
+                        help='Should create historical data')
     parser.add_argument(
         '--private_key_file',
         required=True,
@@ -272,7 +277,7 @@ def mqtt_device_simulator(args):
         args.project_id, args.cloud_region, args.registry_id,
         args.device_id, args.private_key_file, args.algorithm,
         args.ca_certs, args.mqtt_bridge_hostname, args.mqtt_bridge_port)
-    
+
     fake = Faker()
     geocode = fake.local_latlng(country_code='IN', coords_only=True)
     print(f'Geocode: {geocode}')
@@ -290,15 +295,20 @@ def mqtt_device_simulator(args):
                 break
 
             # Otherwise, wait and connect again.
-            delay = minimum_backoff_time + random.randint(0, 1000) / 1000.0
+            delay = minimum_backoff_time + random.randint(0, 100) / 1000.0
             print('Waiting for {} before reconnecting.'.format(delay))
             time.sleep(delay)
             minimum_backoff_time *= 2
             client.connect(args.mqtt_bridge_hostname, args.mqtt_bridge_port)
         payload = dict()
         payload['deviceId'] = args.device_id
+        if (args.historical_data):
+            timestamp = fake.date_time_between(
+                start_date='-30d', end_date='now')
+        else:
+            timestamp = datetime.datetime.utcnow()
         payload['timestamp'] = datetime.datetime.strftime(
-            datetime.datetime.utcnow(), '%Y-%m-%d %H:%M:%S')
+            timestamp, '%Y-%m-%d %H:%M:%S')
         payload['latitude'] = geocode[0]
         payload['longitude'] = geocode[1]
         payload['volume'] = random.randint(800, 2000)
