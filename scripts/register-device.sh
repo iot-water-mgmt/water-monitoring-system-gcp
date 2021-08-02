@@ -4,8 +4,9 @@ PROJECT=$1
 REGION=$2
 REGISTRY=$3
 NUM_OF_DEVICES=$4
+DIR=secrets
 
-cd demo-device
+cd $DIR
 counter=1
 while [ $counter -le $NUM_OF_DEVICES ]; do
     sudo gcloud iot devices create device$counter --project=$PROJECT --region=$REGION --registry=$REGISTRY --public-key path=rsa_cert.pem,type=rs256
