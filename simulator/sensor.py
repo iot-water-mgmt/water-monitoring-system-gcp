@@ -269,7 +269,7 @@ def mqtt_device_simulator(args):
         # Process network events.
         client.loop()
 
-        # Wait if backoff is required and not historical data creation
+        # Wait if backoff is required
         if should_backoff:
             # If backoff time is too large, give up.
             if minimum_backoff_time > MAXIMUM_BACKOFF_TIME:
