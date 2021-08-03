@@ -288,7 +288,7 @@ def mqtt_device_simulator(args):
         client.loop()
 
         # Wait if backoff is required and not historical data creation
-        if should_backoff and not args.historical_data:
+        if should_backoff:
             # If backoff time is too large, give up.
             if minimum_backoff_time > MAXIMUM_BACKOFF_TIME:
                 print('Exceeded maximum backoff time. Giving up.')
@@ -298,7 +298,6 @@ def mqtt_device_simulator(args):
             delay = minimum_backoff_time + random.randint(0, 100) / 1000.0
             print('Waiting for {} before reconnecting.'.format(delay))
             time.sleep(delay)
-            minimum_backoff_time *= 2
             client.connect(args.mqtt_bridge_hostname, args.mqtt_bridge_port)
         payload = dict()
         payload['deviceId'] = args.device_id
