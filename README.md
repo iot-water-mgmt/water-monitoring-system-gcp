@@ -48,3 +48,5 @@ Execute the follwing commands using gcloud CLI or cloud shell.
 3. `terraform plan`
 4. `terraform apply`
 
+### Synchronize timezone by setting it to UTC
+`timedatectl set-timezone UTC`
